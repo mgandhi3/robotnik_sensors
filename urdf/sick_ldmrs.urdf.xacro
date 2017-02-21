@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
-<robot name="sensor_hokuyo_utm30lx" xmlns:xacro="http://www.ros.org/wiki/xacro">
-
-
-  <xacro:macro name="sensor_hokuyo_utm30lx" params="name parent *origin min_angle:=-2.0943 max_angle:=2.0943">
+<robot name="sensor_sick_ldmrs" xmlns:xacro="http://www.ros.org/wiki/xacro">
+	
+	
+  <xacro:macro name="sensor_sick_ldmrs" params="name parent *origin min_angle:=-2.0943 max_angle:=2.0943">
      
     <joint name="${name}_joint" type="fixed">
       <!-- FRONT MOUNT  -->
@@ -13,13 +13,20 @@
       <parent link="${parent}"/>
       <child link="${name}_link"/>
     </joint>
-
   
+    
     <link name="${name}_link">
-      <visual>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+      <collision>
+        <origin xyz="0 0 -0.05" rpy="0 0 0"/>
         <geometry>
-            <mesh filename="package://robotnik_sensors/meshes/hokuyo_utm_30lx.dae"/>
+          <box size="0.1 0.1 0.08"/>
+        </geometry>
+      </collision>
+  
+      <visual>
+        <origin xyz="0 0 -0.05" rpy="0 0 0"/>
+        <geometry>
+            <mesh filename="package://robotnik_sensors/meshes/hokuyo_urg_04lx.dae"/>
         </geometry>
       </visual>
   
@@ -29,15 +36,15 @@
         <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
       </inertial>
     </link>
-	
-
+    
+  
     <!-- Hokuyo sensor for simulation -->		
-    <sensor_hokuyo_utm_gazebo/>
+    <sensor_sick_ldmrs_gazebo/>
 		
   </xacro:macro>
   
     
-  <xacro:macro name="sensor_hokuyo_utm_gazebo">
+  <xacro:macro name="sensor_sick_ldmrs_gazebo">
     <gazebo reference="${name}_link">
 			<sensor type="ray" name="${name}_sensor">
 				<pose>0 0 0 0 0 0</pose>
@@ -68,7 +75,7 @@
 					<frameName>${name}_link</frameName>
 				</plugin>
 			</sensor>
-		</gazebo>
+	</gazebo>
   </xacro:macro>
   
 </robot>
